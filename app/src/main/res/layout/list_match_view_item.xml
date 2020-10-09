@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="property"
+            type="com.example.dota_match_tracker.database.MatchData" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/leagueName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginBottom="8dp"
+            android:lines="2"
+            android:maxEms="9"
+            android:text="@{property.leagueName}"
+            android:textSize="10sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/matchId"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/matchId"
+            tools:text="@string/unknown" />
+
+        <TextView
+            android:id="@+id/radiant_score"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text="@{property.radiantScore}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/radiant"
+            app:layout_constraintStart_toStartOf="@+id/radiant"
+            app:layout_constraintTop_toBottomOf="@+id/radiant"
+            tools:text="@string/unknown" />
+
+        <TextView
+            android:id="@+id/dire_score"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text="@{property.direScore}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/dire"
+            app:layout_constraintStart_toStartOf="@+id/dire"
+            app:layout_constraintTop_toBottomOf="@+id/dire"
+            tools:text="@string/unknown" />
+
+        <TextView
+            android:id="@+id/radiant"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="32dp"
+            android:maxEms="5"
+            android:maxLines="2"
+            android:minEms="5"
+            android:text="@{property.radiantName}"
+            android:textAlignment="center"
+            app:layout_constraintEnd_toStartOf="@+id/dire"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/duration"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="@string/unknown" />
+
+        <TextView
+            android:id="@+id/dire"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:maxEms="5"
+            android:minEms="5"
+            android:text="@{property.direName}"
+            android:textAlignment="center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/radiant"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="@string/unknown" />
+
+        <TextView
+            android:id="@+id/matchId"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="@{property.matchId}"
+            app:layout_constraintEnd_toStartOf="@+id/duration"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="@string/unknown" />
+
+        <TextView
+            android:id="@+id/duration"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toStartOf="@+id/radiant"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/matchId"
+            app:layout_constraintTop_toTopOf="parent"
+            app:timeToClock="@{property.durationSeconds}"
+            tools:text="@string/unknown" />
+
+        <ImageView
+            android:id="@+id/image_radiant_win"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:contentDescription="radiant win"
+            app:layout_constraintBottom_toBottomOf="@+id/radiant_score"
+            app:layout_constraintEnd_toStartOf="@+id/radiant_score"
+            app:layout_constraintTop_toTopOf="@+id/radiant_score"
+            app:radiantWinVisibility="@{property.isRadiantWin()}"
+            app:srcCompat="@mipmap/winner" />
+
+        <ImageView
+            android:id="@+id/image_dire_win"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:contentDescription="dire win"
+            app:direWinVisibility="@{property.isRadiantWin()}"
+            app:layout_constraintBottom_toBottomOf="@+id/dire_score"
+            app:layout_constraintEnd_toStartOf="@+id/dire_score"
+            app:layout_constraintTop_toTopOf="@+id/dire_score"
+            app:srcCompat="@mipmap/winner" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

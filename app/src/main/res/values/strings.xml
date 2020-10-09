@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">Dota match tracker</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="type_your_id">Type your id match</string>
+    <string name="label_name_text">PLAYER</string>
+    <string name="label_lvl_text">LVL</string>
+    <string name="label_kills_text">K</string>
+    <string name="label_deaths_text">D</string>
+    <string name="label_assists_text">A</string>
+    <string name="label_lasthits_text">LH</string>
+    <string name="label_gpm_xpm_text">GPM/XPM</string>
+    <string name="label_herodamage_text">HD</string>
+    <string name="label_towerdamage_text">TD</string>
+    <string name="label_herohealing_text">HH</string>
+    <string name="label_gold_text">G</string>
+    <string name="label_items_text">ITEMS</string>
+    <string name="nodata_text">-</string>
+    <string name="unknown">unknown</string>
+</resources>

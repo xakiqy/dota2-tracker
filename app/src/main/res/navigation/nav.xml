@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav"
+    app:startDestination="@id/searchFragment2">
+    <fragment
+        android:id="@+id/searchFragment2"
+        android:name="com.example.dota_match_tracker.ui.SearchFragment"
+        android:label="Dota 2 Match Tracker"
+        tools:layout="@layout/fragment_search">
+        <action
+            android:id="@+id/action_searchFragment2_to_matchDetailFragment2"
+            app:destination="@id/matchDetailFragment2" />
+    </fragment>
+    <fragment
+        android:id="@+id/matchDetailFragment2"
+        android:name="com.example.dota_match_tracker.ui.MatchDetailFragment"
+        android:label="Match Detail"
+        tools:layout="@layout/fragment_match_detail">
+        <argument
+            android:name="selectedProperty"
+            app:argType="com.example.dota_match_tracker.network.NetworkMatchData" />
+    </fragment>
+    <fragment
+        android:id="@+id/matchesViewedFragment"
+        android:name="com.example.dota_match_tracker.ui.MatchesViewedFragment"
+        android:label="Match Viewed  History" >
+        <action
+            android:id="@+id/action_matchesViewedFragment_to_matchDetailFragment2"
+            app:destination="@id/matchDetailFragment2" />
+    </fragment>
+</navigation>
