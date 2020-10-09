@@ -1,2 +1,4 @@
 # dota2-tracker
-dota 2 match tracker, android + kotlin
+dota 2 match tracker
+Kotlin
+Android(Glide, Retrofit2, Room, Moshi)
