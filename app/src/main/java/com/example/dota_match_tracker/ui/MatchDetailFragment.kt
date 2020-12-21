@@ -28,7 +28,10 @@ class MatchDetailFragment : Fragment() {
             MatchDetailFragmentArgs.fromBundle(requireArguments()).selectedProperty
 
         val viewModel =
-            ViewModelProvider(this, MatchDetailViewModel.Factory(networkMatchData, requireContext())).get(
+            ViewModelProvider(
+                this,
+                MatchDetailViewModel.Factory(networkMatchData, requireContext())
+            ).get(
                 MatchDetailViewModel::class.java
             )
 
@@ -42,14 +45,15 @@ class MatchDetailFragment : Fragment() {
         return binding.root
     }
 
-
     private fun infoBinding(
         binding: @NotNull FragmentMatchDetailBinding,
         networkMatchData: NetworkMatchData
     ) {
         with(binding) {
-            radiantTeamUrl = networkMatchData.radiantTeam?.logo ?: "https://static.wikia.nocookie.net/dota2_gamepedia/images/2/2a/Radiant_icon.png/revision/latest/scale-to-width-down/120?cb=20160609200132"
-            direTeamUrl = networkMatchData.direTeam?.logo ?: "https://static.wikia.nocookie.net/dota2_gamepedia/images/0/0e/Dire_icon.png/revision/latest/scale-to-width-down/120?cb=20160609200134"
+            radiantTeamUrl = networkMatchData.radiantTeam?.logo
+                ?: "https://static.wikia.nocookie.net/dota2_gamepedia/images/2/2a/Radiant_icon.png/revision/latest/scale-to-width-down/120?cb=20160609200132"
+            direTeamUrl = networkMatchData.direTeam?.logo
+                ?: "https://static.wikia.nocookie.net/dota2_gamepedia/images/0/0e/Dire_icon.png/revision/latest/scale-to-width-down/120?cb=20160609200134"
             direTeamName.text = networkMatchData.direTeam?.name ?: "Dire"
             radiantTeamName.text = networkMatchData.radiantTeam?.name ?: "Radiant"
             gameMode.text = if (networkMatchData.gameMode.toInt() == 3) "All Pick" else "CM"

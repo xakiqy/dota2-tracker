@@ -9,7 +9,12 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.dota_match_tracker.R
 import com.example.dota_match_tracker.database.MatchData
-import com.example.dota_match_tracker.network.*
+import com.example.dota_match_tracker.database.PlayerInfoUI
+import com.example.dota_match_tracker.database.getDatabase
+import com.example.dota_match_tracker.network.Heroes
+import com.example.dota_match_tracker.network.Items
+import com.example.dota_match_tracker.network.MatchApiStatus
+import com.example.dota_match_tracker.network.PlayerInfo
 import java.time.LocalTime
 
 @BindingAdapter("matchApiStatus")
@@ -28,6 +33,7 @@ fun bindStatus(statusImageView: ImageView, status: MatchApiStatus?) {
         }
     }
 }
+
 @BindingAdapter("listData")
 fun bindRecyclerView(recyclerView: RecyclerView, data: List<MatchData>?) {
     val adapter = recyclerView.adapter as DotaMatchesAdapter
@@ -35,7 +41,7 @@ fun bindRecyclerView(recyclerView: RecyclerView, data: List<MatchData>?) {
 }
 
 @BindingAdapter("listPlayersData")
-fun bindRecyclerViewForPlayerData(recyclerView: RecyclerView, data: List<PlayerInfo>?) {
+fun bindRecyclerViewForPlayerData(recyclerView: RecyclerView, data: List<PlayerInfoUI>?) {
     val adapter = recyclerView.adapter as HeroesDataAdapter
     adapter.submitList(data)
 }
@@ -49,18 +55,18 @@ fun setImageUrl(imageView: ImageView, url: String) {
 
 @BindingAdapter("radiantWinVisibility")
 fun setImageVisibilityRadiant(imageView: ImageView, boolean: Boolean) {
-    if(boolean){
+    if (boolean) {
         imageView.visibility = View.VISIBLE
-    }else{
+    } else {
         imageView.visibility = View.INVISIBLE
     }
 }
 
 @BindingAdapter("direWinVisibility")
 fun setImageVisibilityDire(imageView: ImageView, boolean: Boolean) {
-    if(boolean){
+    if (boolean) {
         imageView.visibility = View.INVISIBLE
-    }else{
+    } else {
         imageView.visibility = View.VISIBLE
     }
 }
@@ -71,10 +77,13 @@ fun formatToClock(textView: TextView, value: String) {
 }
 
 @BindingAdapter("heroIcon")
-fun heroIcon(imageView: ImageView, heroId: String){
-    val hero = Heroes.listHeroes!!.find{it.id == heroId}
-    val url = String.format("http://cdn.dota2.com/apps/dota2/images/heroes/" +
-            hero!!.name.substring(14) + "_lg.png")
+fun heroIcon(imageView: ImageView, heroName: String) {
+//    val hero = Heroes.listHeroes!!.find { it.id == heroId }
+
+    val url = String.format(
+        "http://cdn.dota2.com/apps/dota2/images/heroes/" +
+                heroName.substring(14) + "_lg.png"
+    )
 
 //    val ro = RequestOptions()
     Glide.with(imageView.context).load(url)
@@ -83,21 +92,22 @@ fun heroIcon(imageView: ImageView, heroId: String){
 }
 
 @BindingAdapter("teamIcon")
-fun teamIcon(imageView: ImageView, url: String){
+fun teamIcon(imageView: ImageView, url: String) {
     Glide.with(imageView.context).load(url)
         .into(imageView)
 }
 
 @BindingAdapter("itemIcon")
-fun itemIcon(imageView: ImageView, itemId: String?){
-    if(itemId == "0" || itemId == null)
-    {
+fun itemIcon(imageView: ImageView, itemName: String?) {
+    if (itemName == "0" || itemName == null) {
         imageView.setImageResource(R.mipmap.slotempty)
         return
     }
-    val item = Items.listItems!!.find{it.id == itemId}
-    val url = String.format("http://cdn.dota2.com/apps/dota2/images/items/" +
-            item!!.name.substring(5) + "_lg.png")
+//    val item = Items.listItems!!.find { it.id == itemId }
+    val url = String.format(
+        "http://cdn.dota2.com/apps/dota2/images/items/" +
+                itemName.substring(5) + "_lg.png"
+    )
 
 //    val ro = RequestOptions()
     Glide.with(imageView.context).load(url)
@@ -107,5 +117,5 @@ fun itemIcon(imageView: ImageView, itemId: String?){
 
 @BindingAdapter("dataToK")
 fun formatToK(textView: TextView, valueToK: String) {
-        textView.text = String.format("%.1f", valueToK.toDouble().div(1000)) + "k"
+    textView.text = String.format("%.1f", valueToK.toDouble().div(1000)) + "k"
 }

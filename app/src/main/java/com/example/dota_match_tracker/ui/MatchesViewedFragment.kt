@@ -12,7 +12,6 @@ import com.example.dota_match_tracker.adapter.DotaMatchesAdapter
 import com.example.dota_match_tracker.databinding.FragmentMatchesViewedBinding
 import com.example.dota_match_tracker.network.MatchApiStatus
 import com.example.dota_match_tracker.viewmodel.MatchesViewedModel
-import com.example.dota_match_tracker.viewmodel.SearchViewModel
 
 class MatchesViewedFragment : Fragment() {
     private val viewModel: MatchesViewedModel by lazy {
@@ -28,13 +27,17 @@ class MatchesViewedFragment : Fragment() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = this.viewLifecycleOwner
 
-        binding.matchesGrid.adapter =  DotaMatchesAdapter(DotaMatchesAdapter.OnClickListener{
+        binding.matchesGrid.adapter = DotaMatchesAdapter(DotaMatchesAdapter.OnClickListener {
             viewModel.getMatchInfo(it.matchId)
         })
 
         viewModel.apiStatus.observe(viewLifecycleOwner, Observer {
-            if(it == MatchApiStatus.DONE) {
-                findNavController().navigate(MatchesViewedFragmentDirections.actionMatchesViewedFragmentToMatchDetailFragment2(viewModel.matchData.value!!))
+            if (it == MatchApiStatus.DONE) {
+                findNavController().navigate(
+                    MatchesViewedFragmentDirections.actionMatchesViewedFragmentToMatchDetailFragment2(
+                        viewModel.matchData.value!!
+                    )
+                )
                 viewModel.navigatedToDetail()
             }
         })

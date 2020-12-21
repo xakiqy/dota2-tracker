@@ -6,7 +6,7 @@
     <data>
         <variable
             name="property"
-            type="com.example.dota_match_tracker.network.PlayerInfo" />
+            type="com.example.dota_match_tracker.database.PlayerInfoUI" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -18,7 +18,7 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:src="@drawable/ic_broken_image"
-            app:heroIcon="@{property.heroId}"
+            app:heroIcon="@{property.heroName}"
             app:layout_constraintBottom_toBottomOf="@+id/player"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/player" />

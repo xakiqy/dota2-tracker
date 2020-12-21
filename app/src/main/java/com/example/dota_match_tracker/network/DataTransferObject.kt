@@ -1,7 +1,8 @@
 package com.example.dota_match_tracker.network
 
 import android.os.Parcelable
-import androidx.annotation.Nullable
+import com.example.dota_match_tracker.database.Hero
+import com.example.dota_match_tracker.database.Item
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import kotlinx.android.parcel.Parcelize
@@ -39,7 +40,7 @@ data class NetworkMatchData(
 data class PlayerInfo(
     @Json(name = "player_slot") val playerSlot: String?,
     @Json(name = "account_id") val playerAccountId: String?,
-    @Json(name = "personaname")val name: String?,
+    @Json(name = "personaname") val name: String?,
     val assists: String?,
     val deaths: String?,
     val gold: String?,
@@ -59,9 +60,9 @@ data class PlayerInfo(
     @Json(name = "item_2") val thirdItem: String?,
     @Json(name = "item_3") val fourthItem: String?,
     @Json(name = "item_4") val fivesItem: String?,
-    @Json(name = "item_5")  val sixthItem: String?,
+    @Json(name = "item_5") val sixthItem: String?,
     @Json(name = "item_neutral") val neutralItem: String?
-):Parcelable
+) : Parcelable
 
 @JsonClass(generateAdapter = true)
 @Parcelize
@@ -89,13 +90,47 @@ data class League(
 ) : Parcelable
 
 @JsonClass(generateAdapter = true)
+data class NetworkDotaHeroesData(
+    @Json(name = "result") val result: ResultHeroes,
+)
+
+@JsonClass(generateAdapter = true)
+data class NetworkDotaItemsData(
+    @Json(name = "result") val result: ResultItems,
+)
+
+data class ResultHeroes(
+    @Json(name = "heroes") val heroes: List<HeroesFromJson>,
+    @Json(name = "status") val status: Int
+)
+
+data class ResultItems(
+    @Json(name = "items") val items: List<ItemsFromJson>,
+    @Json(name = "status") val status: Int
+)
+
+@JsonClass(generateAdapter = true)
 data class HeroesFromJson(
-    val id : String,
-    val name: String)
+    val id: String,
+    val name: String
+)
 
 @JsonClass(generateAdapter = true)
 data class ItemsFromJson(
-    val id : String,
-    val name: String)
+    val id: String,
+    val name: String
+)
 
-enum class MatchApiStatus {LOADING, ERROR, DONE}
+fun List<HeroesFromJson>.asHeroesDb(): List<Hero> {
+    return map {
+        Hero(it.id.toLong(), it.name)
+    }
+}
+
+fun List<ItemsFromJson>.asItemsDb(): List<Item> {
+    return map {
+        Item(it.id.toLong(), it.name)
+    }
+}
+
+enum class MatchApiStatus { LOADING, ERROR, DONE }

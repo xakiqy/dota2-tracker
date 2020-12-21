@@ -7,7 +7,6 @@ import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Path
-import java.lang.reflect.Type
 
 interface MatchInfoTrackService {
     @GET("matches/{id}")
@@ -15,6 +14,14 @@ interface MatchInfoTrackService {
 
     @GET("proMatches")
     suspend fun getProMatches(): List<NetworkProMatchesData>
+}
+
+interface DotaDataService {
+    @GET("GetGameItems/v0001/?key=08BDAD6B19694DB2DB4D5A84E0501AC0")
+    suspend fun getItemsData(): NetworkDotaItemsData
+
+    @GET("GetHeroes/v0001/?key=08BDAD6B19694DB2DB4D5A84E0501AC0")
+    suspend fun getHeroesData(): NetworkDotaHeroesData
 }
 
 /**
@@ -36,6 +43,15 @@ object Network {
         .build()
 
     val matchData = retrofit.create(MatchInfoTrackService::class.java)
+}
+
+object NetworkDotaInfo {
+    private val retrofit = Retrofit.Builder()
+        .baseUrl("https://api.steampowered.com/IEconDOTA2_570/")
+        .addConverterFactory(MoshiConverterFactory.create(moshi))
+        .build()
+
+    val dotaData = retrofit.create(DotaDataService::class.java)
 }
 
 object Heroes {

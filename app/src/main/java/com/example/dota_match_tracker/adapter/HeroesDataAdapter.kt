@@ -6,12 +6,12 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.example.dota_match_tracker.database.PlayerInfoUI
 import com.example.dota_match_tracker.databinding.DataTeamListViewBinding
-import com.example.dota_match_tracker.network.PlayerInfo
 import kotlinx.android.synthetic.main.data_team_list_view.view.*
 
 class HeroesDataAdapter :
-    ListAdapter<PlayerInfo, HeroesDataAdapter.HeroesDataViewHolder>(
+    ListAdapter<PlayerInfoUI, HeroesDataAdapter.HeroesDataViewHolder>(
         DiffCallback
     ) {
 
@@ -44,25 +44,25 @@ class HeroesDataAdapter :
         }
     }
 
-    companion object DiffCallback : DiffUtil.ItemCallback<PlayerInfo>() {
+    companion object DiffCallback : DiffUtil.ItemCallback<PlayerInfoUI>() {
         override fun areItemsTheSame(
-            oldItem: PlayerInfo,
-            newItem: PlayerInfo
+            oldItem: PlayerInfoUI,
+            newItem: PlayerInfoUI
         ): Boolean {
             return oldItem === newItem
         }
 
         override fun areContentsTheSame(
-            oldItem: PlayerInfo,
-            newItem: PlayerInfo
+            oldItem: PlayerInfoUI,
+            newItem: PlayerInfoUI
         ): Boolean {
-            return oldItem.heroId == newItem.heroId
+            return oldItem.heroName == newItem.heroName
         }
     }
 
     class HeroesDataViewHolder(private var binding: DataTeamListViewBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(playerInfo: PlayerInfo) {
+        fun bind(playerInfo: PlayerInfoUI) {
             binding.property = playerInfo
             binding.executePendingBindings()
         }

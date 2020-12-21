@@ -1,16 +1,13 @@
 package com.example.dota_match_tracker.viewmodel
 
-import android.app.Application
 import android.content.Context
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.dota_match_tracker.database.MatchData
+import com.example.dota_match_tracker.database.PlayerInfoUI
 import com.example.dota_match_tracker.database.getDatabase
 import com.example.dota_match_tracker.network.NetworkMatchData
-import com.example.dota_match_tracker.network.NetworkProMatchesData
-import com.example.dota_match_tracker.network.PlayerInfo
 import com.example.dota_match_tracker.repository.MatchesRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -24,12 +21,44 @@ class MatchDetailViewModel(private val matchData: NetworkMatchData, context: Con
     private val job = Job()
     private val uiScope = CoroutineScope(Dispatchers.Main + job)
 
-    val firstTeam = MutableLiveData<List<PlayerInfo>>()
-    val secondTeam = MutableLiveData<List<PlayerInfo>>()
+    val firstTeam = MutableLiveData<List<PlayerInfoUI>>()
+    val secondTeam = MutableLiveData<List<PlayerInfoUI>>()
 
     init {
-        firstTeam.value = matchData.players.take(5)
-        secondTeam.value = matchData.players.takeLast(5)
+        var playerInfoUI: List<PlayerInfoUI>
+        uiScope.launch {
+            playerInfoUI =
+                matchData.players.map {
+                    with(repository) {
+                    PlayerInfoUI(
+                        it.playerSlot,
+                        it.playerAccountId,
+                        it.name,
+                        it.assists,
+                        it.deaths,
+                        it.gold,
+                        it.kills,
+                        it.level,
+                        it.kda,
+                        it.towerDamage,
+                        it.lastHits,
+                        it.goldPerMin,
+                        it.xpPerMin,
+                        it.heroDamage,
+                        getHeroName(it.heroId!!),
+                        getItemName(it.firstItem ?: "0"),
+                        getItemName(it.secondItem?: "0"),
+                        getItemName(it.thirdItem?: "0"),
+                        getItemName(it.fourthItem?: "0"),
+                        getItemName(it.fivesItem?: "0"),
+                        getItemName(it.sixthItem?: "0"),
+                        getItemName(it.neutralItem?: "0")
+                    )
+                }}
+            firstTeam.value = playerInfoUI.take(5)
+            secondTeam.value = playerInfoUI.takeLast(5)
+        }
+
         uiScope.launch {
             repository.addViewedMatch(
                 MatchData(

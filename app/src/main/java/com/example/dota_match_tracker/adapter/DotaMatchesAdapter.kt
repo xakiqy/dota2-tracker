@@ -5,8 +5,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.dota_match_tracker.databinding.ListMatchViewItemBinding
 import com.example.dota_match_tracker.database.MatchData
+import com.example.dota_match_tracker.databinding.ListMatchViewItemBinding
 
 class DotaMatchesAdapter(val onClickListener: OnClickListener) :
     ListAdapter<MatchData, DotaMatchesAdapter.MatchesDataViewHolder>(

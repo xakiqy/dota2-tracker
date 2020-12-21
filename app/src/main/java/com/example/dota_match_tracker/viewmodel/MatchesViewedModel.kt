@@ -5,7 +5,9 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.dota_match_tracker.database.getDatabase
-import com.example.dota_match_tracker.network.*
+import com.example.dota_match_tracker.network.MatchApiStatus
+import com.example.dota_match_tracker.network.Network
+import com.example.dota_match_tracker.network.NetworkMatchData
 import com.example.dota_match_tracker.repository.MatchesRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

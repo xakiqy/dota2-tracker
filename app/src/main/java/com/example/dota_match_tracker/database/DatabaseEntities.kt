@@ -3,6 +3,7 @@ package com.example.dota_match_tracker.database
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.example.dota_match_tracker.network.NetworkProMatchesData
+import com.squareup.moshi.Json
 
 @Entity
 data class MatchData(
@@ -16,6 +17,20 @@ data class MatchData(
     val radiantName: String,
     val radiantScore: String,
     val isRadiantWin: Boolean
+)
+
+@Entity
+data class Hero(
+    @PrimaryKey(autoGenerate = false)
+    val id: Long,
+    val heroName: String
+)
+
+@Entity
+data class Item(
+    @PrimaryKey(autoGenerate = false)
+    val id: Long,
+    val itemName: String
 )
 
 fun List<MatchData>.asNetworkProMatchesData(): List<NetworkProMatchesData> {
@@ -47,5 +62,30 @@ fun List<NetworkProMatchesData>.asMatchesData(): List<MatchData> {
         )
     }
 }
+
+data class PlayerInfoUI(
+    val playerSlot: String?,
+    val playerAccountId: String?,
+    val name: String?,
+    val assists: String?,
+    val deaths: String?,
+    val gold: String?,
+    val kills: String?,
+    val level: String?,
+    val kda: String?,
+    val towerDamage: String?,
+    val lastHits: String?,
+    val goldPerMin: String?,
+    val xpPerMin: String?,
+    val heroDamage: String?,
+    val heroName: String?,
+    val firstItem: String?,
+    val secondItem: String?,
+    val thirdItem: String?,
+    val fourthItem: String?,
+    val fivesItem: String?,
+    val sixthItem: String?,
+    val neutralItem: String?
+)
 
 
